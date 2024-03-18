@@ -1,0 +1,48 @@
+use master
+drop database carros
+drop table veículos
+drop table proprietários
+
+create database carros
+use carros
+
+create table proprietários(
+	IDproprietario int primary key identity,
+	nome varchar(max),
+	cpf bigint
+	);
+
+insert into proprietários (nome, cpf) values
+('joão', 45063815804),
+('raimundo', 783621459),
+('letícia', 12598742634);
+
+select * from proprietários
+
+
+create table veículos (
+	placa varchar(10) primary key,
+	marca varchar(max),
+	modelo varchar(max),
+	ano int,
+	cor varchar(10),
+	proprietarioID int foreign key (proprietarioID) references proprietários(IDproprietario)
+	);
+
+	
+
+	insert into veículos (placa, marca, modelo, ano, cor, proprietarioID) values
+	('teste 1', 'fox', 'teste1', 2018, 'laranja', 2),
+	('teste 2', 'mustang', 'teste2', 2019, 'azul', 2),
+	('teste 3', 'renault', 'teste3', 2014, 'preto', 1),
+	('teste 4', 'mustang', 'teste4', 2023, 'preto', 3),
+	('teste 5', 'ford', 'teste5', 2014, 'prata', 1);
+
+	select * from veículos
+
+	create table multas(
+	IDmulta int primary key identity,
+	veiculoID varchar(10) foreign key (veiculoID) references veículos(placa),
+	descrição varchar(max),
+	valor float
+	);
