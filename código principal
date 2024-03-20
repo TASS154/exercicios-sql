@@ -26,7 +26,7 @@ create table veículos (
 	modelo varchar(max),
 	ano int,
 	cor varchar(10),
-	proprietarioID int foreign key (proprietarioID) references proprietários(IDproprietario)
+	proprietarioID INT foreign key references proprietários(IDproprietario)
 	);
 
 	
@@ -42,7 +42,27 @@ create table veículos (
 
 	create table multas(
 	IDmulta int primary key identity,
-	veiculoID varchar(10) foreign key (veiculoID) references veículos(placa),
+	veiculoID varchar(10) foreign key references veículos(placa),
 	descrição varchar(max),
 	valor float
 	);
+
+	insert into multas (veiculoID, descrição, valor) values
+	('teste 1', 'velocidade alta', 200.00),
+	('teste 1', 'acidente', 438.00),
+	('teste 2', 'dirigindo enquanto bebâdo', 250.00),
+	('teste 4', 'fárol alto em via iluminada', 88.00);
+
+	select * from multas
+
+	select distinct nome
+	from proprietários p
+	join veículos v ON p.IDproprietario = v.proprietarioID
+	where v.placa in (select veiculoID from multas)
+
+
+
+	select placa
+	from veículos v
+	inner join multas m  on v.placa = m.veiculoID
+	where valor > (SELECT AVG(valor) FROM multas);
